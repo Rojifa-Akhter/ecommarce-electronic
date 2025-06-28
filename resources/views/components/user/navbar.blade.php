@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
             <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
                 <li class="nav-item">
-                    <a class="nav-link fw-bold" href="{{ url('/') }}">Home</a>
+                    <a class="nav-link fw-bold" href="{{ url('/home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/products') }}">Products</a>
