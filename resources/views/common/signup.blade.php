@@ -14,7 +14,7 @@
                 <p class="mb-4 text-muted">Give us some information to create the account.</p>
 
                 <!-- Form -->
-                <form method="POST" action="">
+                <form method="POST" action="signup">
                     @csrf
                     <div class="mb-3 position-relative">
                         <i class="bi bi-envelope form-icon"></i>
@@ -47,7 +47,7 @@
 
         <!-- Right Column: Image -->
         <div class="col-md-6 d-none d-md-block p-0">
-            <img src="{{ asset('images/hero.png') }}" alt="Signup Visual" class="img-fluid h-100 w-100 object-fit-cover">
+            <img src="{{ asset('images/sign.png') }}" alt="Signup Visual" class="img-fluid h-100 w-100 object-fit-cover">
         </div>
     </div>
 </div>
