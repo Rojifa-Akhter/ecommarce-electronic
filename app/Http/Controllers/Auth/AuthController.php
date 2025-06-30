@@ -18,6 +18,35 @@ class AuthController extends Controller
     {
 
     }
+    //login
+    public function login(Request $request)
+    {
+        $validatedData = Validator::make($request->all(), [
+            'email'    => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validatedData->fails()) {
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+        }
+
+        if ($user->status !== 'active') {
+            return redirect()->back()->withErrors(['email' => 'Your email is not verified. Please verify OTP.']);
+        }
+
+        // Login the user
+        auth()->login($user);
+
+        return redirect('/home')->with('success', 'Login successful!');
+    }
+
+    //signup
     public function signup(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -57,6 +86,7 @@ class AuthController extends Controller
         return redirect('/auth/otp')->with('success', 'Account created successfully!');
     }
 
+    //verify otp
     public function verifyOtp(Request $request)
     {
         // return $request;

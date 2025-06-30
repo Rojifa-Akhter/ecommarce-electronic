@@ -36,7 +36,7 @@
             <a href="{{ url('/cart') }}" class="text-white">
                 <i class="bi bi-cart" style="font-size: 1.2rem;"></i>
             </a>
-            <a href="" class="btn btn-sm" style="background-color: #d4af37; color: black;">
+            <a href="{{ url('/auth/login') }}" class="btn btn-sm" style="background-color: #d4af37; color: black;">
                 Login
             </a>
         </div>
