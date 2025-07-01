@@ -3,17 +3,19 @@
 @section('title', 'Verify Email')
 
 @section('content')
+@php
+    $email = old('email') ?? session('email');
+@endphp
+
 <div class="container-fluid">
     <div class="row min-vh-100">
-        <!-- Left: Verification Form -->
         <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
             <div class="w-100 text-center" style="max-width: 400px;">
                 <h2 class="fw-bold mb-3 text-white">Verify Email</h2>
                 <p class="mb-4 text-muted">
-                    We have sent a 6-digit code to <strong>{{ session('email') ?? 'your email' }}</strong>
+                    We have sent a 6-digit code to <strong>{{ $email ?? 'your email' }}</strong>
                 </p>
 
-                <!-- OTP Verification Form -->
                 <form method="POST" action="/auth/otp" id="otp-form">
                     @csrf
 
@@ -25,9 +27,8 @@
                         @endfor
                     </div>
 
-                    <!-- Hidden fields -->
                     <input type="hidden" name="otp" id="otp">
-                    <input type="hidden" name="email" value="{{ session('email') }}">
+                    <input type="hidden" name="email" value="{{ $email }}">
 
                     <button type="submit" class="btn w-100 py-2"
                         style="background-color: #dcb76c; color: #000; font-weight: 600;">
@@ -35,14 +36,12 @@
                     </button>
                 </form>
 
-                <!-- Resend OTP Form -->
                 <form method="POST" action="{{ url('/auth/resend-otp') }}" class="mt-3">
                     @csrf
-                    <input type="hidden" name="email" value="{{ session('email') }}">
+                    <input type="hidden" name="email" value="{{ $email }}">
                     <button type="submit" class="btn btn-link text-warning small p-0 m-0">Resend OTP</button>
                 </form>
 
-                <!-- Show Errors -->
                 @if ($errors->any())
                     <div class="mt-3 text-danger">
                         @foreach ($errors->all() as $error)
@@ -51,7 +50,6 @@
                     </div>
                 @endif
 
-                <!-- Success Message -->
                 @if (session('success'))
                     <div class="mt-3 text-success">
                         {{ session('success') }}
@@ -60,7 +58,6 @@
             </div>
         </div>
 
-        <!-- Right: Image -->
         <div class="col-md-6 d-none d-md-block p-0">
             <img src="{{ asset('images/hero.png') }}" alt="Verify Email Image"
                 class="img-fluid h-100 w-100 object-fit-cover">
@@ -68,7 +65,6 @@
     </div>
 </div>
 
-<!-- JavaScript to combine OTP digits -->
 <script>
     document.getElementById('otp-form').addEventListener('submit', function (e) {
         let codeInputs = document.querySelectorAll('.otp-input');
@@ -77,9 +73,7 @@
             otp += input.value;
         });
 
-        // Trim to 6 digits (just in case)
         otp = otp.substring(0, 6);
-
         document.getElementById('otp').value = otp;
     });
 </script>

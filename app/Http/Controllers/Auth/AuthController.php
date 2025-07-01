@@ -121,32 +121,35 @@ class AuthController extends Controller
         return redirect('/home')->with('success', 'Email verified successfully!');
 
     }
-    public function resendOtp(Request $request)
+ public function resendOtp(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
         ]);
+
         if ($validatedData->fails()) {
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
 
         $user = User::where('email', $request->email)->first();
-        if (! $user) {
-            return redirect()->back()->withErrors(['email' => 'User not found']);
-        }
-        $otp            = rand(100000, 999999);
+
+        $otp = rand(100000, 999999);
         $otp_expires_at = now()->addMinutes(10);
+
         $user->update([
             'otp'            => $otp,
             'otp_expires_at' => $otp_expires_at,
         ]);
+
         try {
             Mail::to($user->email)->send(new SendMail($otp));
         } catch (Exception $e) {
-            Log::error('Resend otp failed:' . $e->getMessage());
-
-            // return redirect()->back()->withErrors('error', 'Failed to resend Otp. Please try again later.');
+            Log::error('Resend OTP failed: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Otp has been resend successfully');
+
+        $request->session()->flash('email', $user->email);
+
+        return redirect()->back()->with('success', 'OTP has been resent successfully.');
     }
+
 }
