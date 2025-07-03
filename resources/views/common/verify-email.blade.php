@@ -59,7 +59,7 @@
         </div>
 
         <div class="col-md-6 d-none d-md-block p-0">
-            <img src="{{ asset('images/hero.png') }}" alt="Verify Email Image"
+            <img src="{{ asset('images/sign.png') }}" alt="Verify Email Image"
                 class="img-fluid h-100 w-100 object-fit-cover">
         </div>
     </div>

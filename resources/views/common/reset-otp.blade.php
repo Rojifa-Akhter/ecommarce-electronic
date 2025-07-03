@@ -12,11 +12,11 @@
         <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
             <div class="w-100 text-center" style="max-width: 400px;">
                 <h2 class="fw-bold mb-3 text-white">Reset Password OTP</h2>
-                <p class="mb-4 text-muted">
+                <p class="mb-4 text-white-50">
                     OTP sent to <strong>{{ $email }}</strong>
                 </p>
 
-                <form method="POST" action="{{ url('/auth/verify-reset-otp') }}" id="otp-form">
+                <form method="POST" action="{{ url('/auth/reset-otp') }}" id="otp-form">
                     @csrf
 
                     <div class="d-flex justify-content-between mb-3">
@@ -35,6 +35,11 @@
                         Verify OTP
                     </button>
                 </form>
+                <form method="POST" action="{{ url('/auth/resend-otp') }}" class="mt-3">
+                    @csrf
+                    <input type="hidden" name="email" value="{{ $email }}">
+                    <button type="submit" class="btn btn-link text-warning small p-0 m-0">Resend OTP</button>
+                </form>
 
                 @if ($errors->any())
                     <div class="mt-3 text-danger">
@@ -44,6 +49,10 @@
                     </div>
                 @endif
             </div>
+        </div>
+        <div class="col-md-6 d-none d-md-block p-0">
+            <img src="{{ asset('images/sign.png') }}" alt="Verify Email Image"
+                class="img-fluid h-100 w-100 object-fit-cover">
         </div>
     </div>
 </div>

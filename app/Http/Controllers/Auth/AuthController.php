@@ -25,6 +25,9 @@ class AuthController extends Controller
         return view('user.profile', compact('user'));
     }
     //edit profile
+    public function showEditProfile(){
+        return view('user.edit-profile');
+    }
     public function editProfile(Request $request)
     {
         $user = auth()->user();
@@ -68,6 +71,10 @@ class AuthController extends Controller
         return redirect('/auth/profile')->with('success', 'Profile updated successfully!');
     }
     //login
+    public function showLoginForm()
+    {
+        return view('common.login');
+    }
     public function login(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -104,6 +111,10 @@ class AuthController extends Controller
     }
 
     //signup
+    public function signupForm()
+    {
+        return view('common.signup');
+    }
     public function signup(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -144,6 +155,10 @@ class AuthController extends Controller
     }
 
     //verify otp
+    public function verifyOtpForm()
+    {
+        return view('common.verify-email');
+    }
     public function verifyOtp(Request $request)
     {
         // return $request;
@@ -208,6 +223,12 @@ class AuthController extends Controller
 
         return redirect()->back()->with('success', 'OTP has been resent successfully.');
     }
+    //for change password
+    public function showChangePasswordForm()
+    {
+        return view('user.change-password');
+    }
+
     public function changePass(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -231,6 +252,10 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Password changed successfully!');
     }
     //forgot password
+    public function showForgotPass()
+    {
+        return view('common.forgot-password');
+    }
     public function forgotPass(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -261,6 +286,11 @@ class AuthController extends Controller
         return redirect('/auth/reset-otp')->with('success', 'OTP sent to your email.');
 
     }
+    //reset otp
+    public function verifyResetOtpForm()
+    {
+        return view('common.reset-otp');
+    }
     public function verifyResetOtp(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -289,6 +319,10 @@ class AuthController extends Controller
     }
 
     //reset password
+    public function showResetPass()
+    {
+        return view('common.reset-password');
+    }
     public function resetPass(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
