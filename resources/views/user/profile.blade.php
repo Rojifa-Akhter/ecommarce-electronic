@@ -18,8 +18,9 @@
         <div class="text-center mb-5" style="max-width: 320px; margin: auto; position: relative;">
             <!-- Profile Image with Edit Icon on Bottom Right -->
             <div class="position-relative d-inline-block" style="width: 120px; height: 120px;">
-                <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('images/user-placeholder.png') }}"
-                    class="rounded-circle border border-warning" width="120" height="120" style="object-fit: cover;">
+                <img src="{{ auth()->user()->image }}" class="rounded-circle border border-warning" width="120"
+                    height="120" style="object-fit: cover;">
+
 
                 <!-- ✏️ Edit Icon positioned at bottom-right -->
                 <a href="{{ url('/auth/edit-profile') }}"

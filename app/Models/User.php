@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -28,9 +27,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-protected $casts = [
-    'otp_expires_at' => 'datetime',
-];
+    protected $casts = [
+        'otp_expires_at' => 'datetime',
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -41,7 +40,12 @@ protected $casts = [
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
+    }
+    public function getImageAttribute($image)
+    {
+        $defaultImage = 'default_user.png';
+        return asset('uploads/profile_images/' . ($image ?? $defaultImage));
     }
 }

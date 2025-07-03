@@ -24,6 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/resend-otp', [AuthController::class,'resendOtp']);
     Route::post('/login', [AuthController::class,'login']);
     Route::post('/logout', [AuthController::class,'logout']);
+    Route::post('/update-profile', [AuthController::class,'editProfile']);
     Route::post('/change-pass', [AuthController::class,'changePass']);
     Route::post('/forgot-pass', [AuthController::class,'forgotPass']);
     Route::post('/reset-pass', [AuthController::class,'resetPass']);

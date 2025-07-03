@@ -24,6 +24,49 @@ class AuthController extends Controller
 
         return view('user.profile', compact('user'));
     }
+    //edit profile
+    public function editProfile(Request $request)
+    {
+        $user = auth()->user();
+        if (! $user) {
+            return redirect('/auth/login')->withErrors(['auth' => 'You are not logged in.']);
+        }
+
+        $validatedData = Validator::make($request->all(), [
+            'name'    => 'nullable|string|min:3|max:12',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'phone'   => 'nullable',
+            'address' => 'nullable',
+        ]);
+        if ($validatedData->fails()) {
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+        $user->name    = $request->name;
+        $user->phone   = $request->phone;
+        $user->address = $request->address;
+        if ($request->hasFile('image')) {
+            $existingImage = $user->image;
+
+            if ($existingImage) {
+                $oldImage = parse_url($existingImage);
+                $filePath = ltrim($oldImage['path'], '/');
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Delete the existing image
+                }
+            }
+
+            // Upload new image
+            $image     = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $newName   = time() . '.' . $extension;
+            $image->move(public_path('uploads/profile_images'), $newName);
+
+            $user['image'] = $newName;
+        }
+        $user->save();
+
+        return redirect('/auth/profile')->with('success', 'Profile updated successfully!');
+    }
     //login
     public function login(Request $request)
     {
