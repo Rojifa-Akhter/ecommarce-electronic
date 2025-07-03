@@ -10,7 +10,7 @@
                 <div class="w-100" style="max-width: 400px;">
 
                     <h2 class="fw-bold mb-3">Welcome back!</h2>
-                    <p class="mb-4 text-muted">Please fill in the below information to log in.</p>
+                    <p class="mb-4 text-white-50">Please fill in the below information to log in.</p>
 
                     <form method="POST" action="{{ url('/auth/login') }}">
 
@@ -19,7 +19,7 @@
                         <!-- Email -->
                         <div class="mb-3 position-relative">
                             <i class="bi bi-envelope form-icon"></i>
-                            <input type="email" name="email" class="form-control ps-5" placeholder="ivan123@gmail.com"
+                            <input type="email" name="email" class="form-control ps-5" placeholder="rose@gmail.com"
                                 required autofocus>
                         </div>
 
@@ -34,11 +34,11 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                                <label class="form-check-label text-muted" for="remember">
+                                <label class="form-check-label text-white-50" for="remember">
                                     Remember me
                                 </label>
                             </div>
-                            <a href="" class="text-warning small">Forgot password?</a>
+                            <a href="{{ url('auth/forgot-pass') }}" class="text-warning small">Forgot password?</a>
                         </div>
 
                         <button type="submit" class="btn w-100 py-2"
@@ -61,7 +61,7 @@
                     @endif
 
                     <div class="mt-4 text-center">
-                        <p class="text-muted small">Don’t have an account?
+                        <p class="text-white-50 small">Don’t have an account?
                             <a href="{{ url('/auth/signup') }}" class="text-warning">Sign up</a>
                         </p>
                     </div>

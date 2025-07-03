@@ -256,18 +256,16 @@ class AuthController extends Controller
             Log::error('Send OTP failed: ' . $e->getMessage());
         }
 
-        $request->session()->flash('email', $user->email);
+        $request->session()->put('reset_email', $user->email); // save to session
 
-        return redirect('/auth/reset-pass')->with('success', 'OTP has been sent to your email.');
+        return redirect('/auth/reset-otp')->with('success', 'OTP sent to your email.');
 
     }
-    //reset password
-    public function resetPass(Request $request)
+    public function verifyResetOtp(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
-            'email'    => 'required|email|exists:users,email',
-            'otp'      => 'required|min:6|max:6',
-            'password' => 'required|string|min:6|confirmed',
+            'email' => 'required|email|exists:users,email',
+            'otp'   => 'required|min:6|max:6',
         ]);
 
         if ($validatedData->fails()) {
@@ -276,22 +274,45 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (! $user) {
-            return redirect()->back()->withErrors(['email' => 'User not found']);
-        }
-
-        if ($user->otp !== $request->otp) {
+        if (! $user || $user->otp !== $request->otp) {
             return redirect()->back()->withErrors(['otp' => 'Invalid OTP'])->withInput();
         }
 
         if (! $user->otp_expires_at || now()->greaterThan($user->otp_expires_at)) {
-            return redirect()->back()->withErrors(['otp' => 'OTP has expired'])->withInput();
+            return redirect()->back()->withErrors(['otp' => 'OTP expired'])->withInput();
+        }
+
+        // Pass verified, send to reset page
+        session()->put('reset_email_verified', $user->email);
+
+        return redirect('/auth/reset-pass')->with('success', 'OTP verified. Please reset your password.');
+    }
+
+    //reset password
+    public function resetPass(Request $request)
+    {
+        $validatedData = Validator::make($request->all(), [
+            'email'    => 'required|email|exists:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validatedData->fails()) {
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if (! $user) {
+            return redirect()->back()->withErrors(['email' => 'User not found']);
         }
 
         $user->password       = Hash::make($request->password);
         $user->otp            = null;
         $user->otp_expires_at = null;
         $user->save();
+
+        // Forget session
+        session()->forget('reset_email');
+        session()->forget('reset_email_verified');
 
         return redirect('/auth/login')->with('success', 'Password reset successfully!');
     }

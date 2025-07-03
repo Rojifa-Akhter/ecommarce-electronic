@@ -11,14 +11,14 @@
 
                 <!-- Heading -->
                 <h2 class="fw-bold mb-2">Welcome!</h2>
-                <p class="mb-4 text-muted">Give us some information to create the account.</p>
+                <p class="mb-4 text-white-50">Give us some information to create the account.</p>
 
                 <!-- Form -->
                 <form method="POST" action="signup">
                     @csrf
                     <div class="mb-3 position-relative">
                         <i class="bi bi-envelope form-icon"></i>
-                        <input type="email" class="form-control ps-5" name="email" placeholder="ivan231@gmail.com" required>
+                        <input type="email" class="form-control ps-5" name="email" placeholder="rose@gmail.com" required>
                     </div>
 
                     <div class="mb-3 position-relative">
@@ -33,7 +33,7 @@
 
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" id="terms" required checked>
-                        <label class="form-check-label small text-muted" for="terms">
+                        <label class="form-check-label small text-white-50" for="terms">
                             By creating an account, you agree to the
                             <a href="#" class="text-warning">terms of conditions</a> &
                             <a href="#" class="text-warning">privacy policy</a>.

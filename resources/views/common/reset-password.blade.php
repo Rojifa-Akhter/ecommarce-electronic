@@ -9,7 +9,7 @@
             <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
                 <div class="w-100" style="max-width: 400px;">
                     <h2 class="fw-bold mb-3">Reset Password</h2>
-                    <p class="mb-4 text-muted">
+                    <p class="mb-4 text-white-50">
                         Enter your new password below.
                     </p>
 
@@ -17,14 +17,7 @@
                         @csrf
 
                         <!-- Email -->
-                        <input type="hidden" name="email" value="{{ session('email') }}">
-
-                        <!-- OTP -->
-                        <div class="mb-3 position-relative">
-                            <label for="otp" class="form-label">Enter OTP</label>
-                            <input type="text" name="otp" class="form-control" placeholder="Enter the OTP from email"
-                                required>
-                        </div>
+                        <input type="hidden" name="email" value="{{ session('reset_email_verified') }}">
 
                         <!-- New Password -->
                         <div class="mb-3 position-relative">

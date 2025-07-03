@@ -15,7 +15,6 @@ Route::group(['prefix' => 'auth'], function () {
     Route::view('login', 'common.login');
     Route::view('/signup', 'common.signup');
     Route::view('/otp', 'common.verify-email');
-    Route::view('/forgot-pass', 'common.forgot-password');
     Route::view('/reset-pass', 'common.reset-password');
     Route::post('/signup', [AuthController::class, 'signup']);
     Route::post('/otp', [AuthController::class, 'verifyOtp']);
@@ -27,6 +26,10 @@ Route::group(['prefix' => 'auth'], function () {
         return view('user.change-password');
     });
     Route::post('/change-pass', [AuthController::class, 'changePass']);
+    Route::view('/forgot-pass', 'common.forgot-password');
     Route::post('/forgot-pass', [AuthController::class, 'forgotPass']);
+    Route::view('/reset-otp', 'common.reset-otp');
+    Route::post('/verify-reset-otp', [AuthController::class, 'verifyResetOtp']);
+
     Route::post('/reset-pass', [AuthController::class, 'resetPass']);
 });

@@ -9,11 +9,11 @@
             <div class="col-md-6 d-flex align-items-center justify-content-center p-5">
                 <div class="w-100" style="max-width: 400px;">
                     <h2 class="fw-bold mb-3">Forgot Password?</h2>
-                    <p class="mb-4 text-muted">
+                    <p class="mb-4 text-white-50">
                         Enter your email address below and we’ll send you a link to reset your password.
                     </p>
 
-                    <form method="POST" action="{{ url('/auth/forgot-password') }}">
+                    <form method="POST" action="{{ url('/auth/forgot-pass') }}">
                         @csrf
 
                         <!-- Email -->
@@ -25,7 +25,7 @@
 
                         <button type="submit" class="btn w-100 py-2"
                             style="background-color: #dcb76c; color: #000; font-weight: 600;">
-                            Send Reset Link
+                            Send OTP
                         </button>
                     </form>
 
@@ -46,7 +46,7 @@
                     @endif
 
                     <div class="mt-4 text-center">
-                        <p class="text-muted small">
+                        <p class="text-white-50 small">
                             Remember your password? <a href="{{ url('/auth/login') }}" class="text-warning">Log in</a>
                         </p>
                     </div>
