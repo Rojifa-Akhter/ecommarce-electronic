@@ -7,6 +7,8 @@ Route::get('/', function () {
     return view('user.home');
 });
 Route::view('user', 'layouts.user');
+Route::view('admin', 'layouts.admin');
+Route::view('dashboard', 'admin.dashboard');
 Route::view('home', 'user.home');
 
 Route::group(['prefix' => 'auth'], function () {

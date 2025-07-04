@@ -1,0 +1,24 @@
+.topbar {
+    background-color: #000;
+    height: 70px;
+    border-bottom: 1px solid #222;
+}
+
+.badge.bg-warning {
+    background-color: #d4af37 !important;
+}
+
+.nav-link {
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: #222;
+    color: #d4af37 !important;
+}
+
+.nav-link.active {
+    background-color: #d4af37 !important;
+    color: #000 !important;
+    font-weight: bold;
+}
