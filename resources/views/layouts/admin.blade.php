@@ -39,13 +39,16 @@
     {{-- Header/Navbar --}}
     @include('components.admin.header')
 
-    {{-- Sidebar --}}
-    @include('components.admin.sidebar')
+    {{-- Main Layout --}}
+    <div class="d-flex">
+        {{-- Sidebar --}}
+        @include('components.admin.sidebar')
 
-    {{-- Page Content --}}
-    <main class="container mt-5">
-        @yield('content')
-    </main>
+        {{-- Page Content --}}
+        <main class="flex-grow-1 p-4">
+            @yield('content')
+        </main>
+    </div>
 
 
 

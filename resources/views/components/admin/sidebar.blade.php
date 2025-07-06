@@ -10,7 +10,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/admin/products') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                <a href="{{ url('/products') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-box-seam"></i>
                     Products
                 </a>

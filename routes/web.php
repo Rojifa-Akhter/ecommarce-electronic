@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('user.home');
 });
 Route::view('user', 'layouts.user');
-Route::view('admin', 'layouts.admin');
-Route::view('dashboard', 'admin.dashboard');
+
 Route::view('home', 'user.home');
 
 Route::group(['prefix' => 'auth'], function () {
@@ -34,3 +34,11 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('logout', [AuthController::class, 'logout']);
     });
 });
+Route::middleware(['auth','admin'])->group(function(){
+
+});
+Route::get('products', [ProductController::class,'index']);
+
+Route::view('admin', 'layouts.admin');
+Route::view('dashboard', 'admin.dashboard');
+Route::view('add-product', 'admin.add_product');
