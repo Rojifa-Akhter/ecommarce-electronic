@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/admin/categories') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                <a href="{{ url('/categories') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-tags"></i>
                     Category
                 </a>

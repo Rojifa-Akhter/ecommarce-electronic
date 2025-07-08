@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Product;
@@ -12,12 +11,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.product_list');
+        return view('admin.product.product_list');
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function showAddProduct()
+    {
+        return view('admin.product.add_product');
+    }
     public function create()
     {
         //

@@ -33,33 +33,21 @@
                     <option selected disabled>Choose category</option>
                 </select>
             </div>
-            <div class="col-md-6">
-                <label class="form-label text-white">Brand</label>
-                <select class="form-select bg-black border-secondary text-white rounded-0 py-2">
-                    <option selected disabled>Choose brand</option>
-                </select>
-            </div>
-        </div>
 
-        <!-- Price & Sale Price -->
-        <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label text-white">Product Price</label>
                 <input type="text" class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="$ Price">
             </div>
-            <div class="col-md-6">
-                <label class="form-label text-white">Sale Price</label>
-                <input type="text" class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="$ Sale price">
-            </div>
+
         </div>
 
         <!-- SKU, Stock, Tags -->
         <div class="row g-3 mb-3">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label text-white">SKU</label>
                 <input type="text" class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="Enter SKU">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label text-white">Stock</label>
                 <select class="form-select bg-black border-secondary text-white rounded-0 py-2">
                     <option selected disabled>Choose...</option>
@@ -67,10 +55,7 @@
                     <option>Out of stock</option>
                 </select>
             </div>
-            <div class="col-md-4">
-                <label class="form-label text-white">Tag</label>
-                <input type="text" class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="Tags">
-            </div>
+            
         </div>
 
         <!-- Colors -->

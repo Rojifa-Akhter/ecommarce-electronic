@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Product\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,8 +38,11 @@ Route::group(['prefix' => 'auth'], function () {
 Route::middleware(['auth','admin'])->group(function(){
 
 });
+Route::get('categories', [CategoryController::class, 'index']);
+Route::get('add-category', [CategoryController::class, 'showAddCategory']);
+Route::post('add-category', [CategoryController::class, 'create']);
 Route::get('products', [ProductController::class,'index']);
+Route::get('add-product', [ProductController::class, 'showAddProduct']);
 
 Route::view('admin', 'layouts.admin');
 Route::view('dashboard', 'admin.dashboard');
-Route::view('add-product', 'admin.add_product');
