@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('title');
-            $table->string('sku');
+            $table->string('sku')->nullable();
             $table->string('stock');
             $table->json('image')->nullable();
             $table->json('color')->nullable();
