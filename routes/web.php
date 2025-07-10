@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Product\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -43,6 +44,9 @@ Route::get('add-category', [CategoryController::class, 'showAddCategory']);
 Route::post('add-category', [CategoryController::class, 'create']);
 Route::get('products', [ProductController::class,'index']);
 Route::get('add-product', [ProductController::class, 'showAddProduct']);
+Route::get('users', [AuthController::class, 'index']);
+Route::get('dashboard', [AdminController::class, 'index']);
+Route::get('about', [AdminController::class, 'index']);
+Route::get('faq', [AdminController::class, 'index']);
 
 Route::view('admin', 'layouts.admin');
-Route::view('dashboard', 'admin.dashboard');

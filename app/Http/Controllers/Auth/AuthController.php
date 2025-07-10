@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     //list users
+    public function index()
+    {
+        $data = User::paginate(10);
+        return view('admin.users.index',['users'=>$data]);
+    }
+
+    //get users
     public function profile()
     {
         $user = auth()->user();
