@@ -49,6 +49,8 @@ Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
 Route::get('about', [AdminController::class, 'about']);
 Route::get('faq', [AdminController::class, 'faq']);
+Route::get('add-faq', [AdminController::class, 'faqForm']);
+Route::post('add-faq', [AdminController::class, 'createFaq']);
 Route::get('blogs', [BlogController::class, 'index']);
 
 Route::view('admin', 'layouts.admin');

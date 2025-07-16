@@ -1,32 +1,49 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Faq;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(){
+    public function index()
+    {
         return view('admin.dashboard');
     }
-    public function about(){
+    public function about()
+    {
         return view('admin.settings.about');
     }
+    //faq section
     public function faq()
     {
-        return view('admin.settings.faq');
+        $faq = Faq::paginate(5);
+        return view('admin.settings.faq',compact('faq'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function faqForm(Request $request)
     {
-         return view('{{ viewPath }}.create');
+        return view('admin.settings.add_faq');
+    }
+    public function createFaq(Request $request)
+    {
+        $validateData = Validator::make($request->all(), [
+            'question' => 'required|string|min:10',
+            'answer'   => 'required|string|min:10',
+        ]);
+        if ($validateData->fails()) {
+            return redirect()->back()->withErrors($validateData)->withInput();
+        }
+        $faq = Faq::updateOrCreate([
+            'question' => $request->question,
+            'answer'   => $request->answer,
+        ]);
+        return redirect('faq')->with('success','Faq Created or Updated Successfully');
     }
 
     /**
