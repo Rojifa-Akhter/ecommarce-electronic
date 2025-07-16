@@ -1,7 +1,8 @@
 <?php
-namespace App\Http\Controllers;
 
-use App\Models\Product;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -21,9 +22,12 @@ class ProductController extends Controller
     {
         return view('admin.product.add_product');
     }
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        //
+         return view('{{ viewPath }}.create');
     }
 
     /**
@@ -31,29 +35,32 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // {{ model }}::create($request->all());
+        return redirect()->route('{{ viewPath }}.index')->with('success', 'Created Successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(string $id)
     {
-        //
+        // $item = {{ model }}::findOrFail($id);
+        return view('{{ viewPath }}.show', compact('item'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(string $id)
     {
-        //
+        // $item = {{ model }}::findOrFail($id);
+        return view('{{ viewPath }}.edit', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -61,7 +68,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
         //
     }

@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Product\CategoryController;
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -47,6 +48,7 @@ Route::get('add-product', [ProductController::class, 'showAddProduct']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
 Route::get('about', [AdminController::class, 'about']);
-Route::get('faq', [AdminController::class, 'index']);
+Route::get('faq', [AdminController::class, 'faq']);
+Route::get('blogs', [BlogController::class, 'index']);
 
 Route::view('admin', 'layouts.admin');

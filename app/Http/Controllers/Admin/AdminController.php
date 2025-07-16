@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Product;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // $data = {{ model }}::all();
-        return view('admin.category.category_list');
+    public function index(){
+        return view('admin.dashboard');
     }
-    public function showAddCategory(){
-        return view('admin.category.add_category');
-
+    public function about(){
+        return view('admin.settings.about');
+    }
+    public function faq()
+    {
+        return view('admin.settings.faq');
     }
 
     /**

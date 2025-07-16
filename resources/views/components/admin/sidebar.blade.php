@@ -30,6 +30,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ url('/blogs') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                    <i class="bi bi-pencil-square"></i>
+                    Blogs
+                </a>
+            </li>
+            <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#settingsSubmenu" role="button" aria-expanded="false"
                     aria-controls="settingsSubmenu"
                     class="nav-link text-white d-flex align-items-center justify-content-between gap-2">
