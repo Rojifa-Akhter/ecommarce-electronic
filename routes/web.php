@@ -46,7 +46,7 @@ Route::get('products', [ProductController::class,'index']);
 Route::get('add-product', [ProductController::class, 'showAddProduct']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
-Route::get('about', [AdminController::class, 'index']);
+Route::get('about', [AdminController::class, 'about']);
 Route::get('faq', [AdminController::class, 'index']);
 
 Route::view('admin', 'layouts.admin');
