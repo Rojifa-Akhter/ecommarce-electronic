@@ -12,5 +12,7 @@
 {{-- === blog SECTION  === --}}
 @include('user.blog')
 {{-- === about SECTION  === --}}
-@include('user.about')
+@include('user.about', ['about' => $about])
+
+
 @endsection

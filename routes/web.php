@@ -5,14 +5,11 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('user.home');
-});
+Route::get('/', [HomeController::class, 'index']);
 Route::view('user', 'layouts.user');
-
-Route::view('home', 'user.home');
 
 Route::group(['prefix' => 'auth'], function () {
     Route::get('signup', [AuthController::class, 'signupForm']);
@@ -47,7 +44,9 @@ Route::get('products', [ProductController::class,'index']);
 Route::get('add-product', [ProductController::class, 'showAddProduct']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
-Route::get('about', [AdminController::class, 'about']);
+Route::get('/about', [AdminController::class, 'about']);
+Route::get('add-about', [AdminController::class, 'createAboutForm']);
+Route::post('add-about', [AdminController::class, 'createAbout']);
 Route::get('faq', [AdminController::class, 'faq']);
 Route::get('add-faq', [AdminController::class, 'faqForm']);
 Route::post('add-faq', [AdminController::class, 'createFaq']);

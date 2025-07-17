@@ -48,7 +48,7 @@
                 <div class="collapse ps-4" id="settingsSubmenu">
                     <ul class="nav flex-column mt-2">
                         <li class="nav-item">
-                            <a href="{{ url('/about') }}" class="nav-link text-white small">
+                            <a href="{{ url('/add-about') }}" class="nav-link text-white small">
                                 <i class="bi bi-info-circle"></i>
                                 About
                             </a>
