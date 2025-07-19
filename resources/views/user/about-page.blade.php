@@ -5,7 +5,7 @@
 @section('content')
 <section class="py-5 bg-black text-white">
     <div class="container">
-        <h2 class="fw-bold mb-4">About Us</h2>
+        <h2 class="fw-bold mb-4">{{ $about->title }}</h2>
         <div class="row align-items-center">
             <!-- Left Side: Description Text -->
             <div class="col-md-6 mb-4 mb-md-0">

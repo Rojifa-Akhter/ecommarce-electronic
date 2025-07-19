@@ -28,7 +28,8 @@ class AdminController extends Controller
     }
     public function createAboutForm()
     {
-        return view('admin.settings.about');
+        $about = About::first();
+        return view('admin.settings.about', compact('about'));
     }
     public function createAbout(Request $request)
     {
@@ -55,9 +56,12 @@ class AdminController extends Controller
         if ($about) {
             // If less than 3 existing images, merge with new ones
             $existingImages = json_decode($about->images, true) ?? [];
-            $allImages      = array_merge($existingImages, $uploadedImages);
-            $allImages      = array_slice($allImages, 0, 3); // Keep only max 3 images
-
+            if (! empty($uploadedImages)) {
+                $allImages = array_merge($existingImages, $uploadedImages);
+                $allImages = array_slice($allImages, 0, 3);
+            } else {
+                $allImages = $existingImages;
+            }
             $about->update([
                 'title'       => $request->title,
                 'description' => $request->description,
