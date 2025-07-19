@@ -1,15 +1,23 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //for user
+    public function products()
+    {
+        $products   = Product::with('category')->latest()->paginate(12);
+        $categories = Category::all();
+
+        return view('user.product.product-page', compact('products', 'categories'));
+    }
+
+//for admin
     public function index()
     {
         return view('admin.product.product_list');
@@ -27,7 +35,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-         return view('{{ viewPath }}.create');
+        return view('{{ viewPath }}.create');
     }
 
     /**

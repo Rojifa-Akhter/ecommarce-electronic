@@ -44,7 +44,6 @@ Route::get('products', [ProductController::class,'index']);
 Route::get('add-product', [ProductController::class, 'showAddProduct']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
-Route::get('/about', [AdminController::class, 'about']);
 Route::get('add-about', [AdminController::class, 'createAboutForm']);
 Route::post('add-about', [AdminController::class, 'createAbout']);
 Route::get('faq', [AdminController::class, 'faq']);
@@ -53,3 +52,7 @@ Route::post('add-faq', [AdminController::class, 'createFaq']);
 Route::get('blogs', [BlogController::class, 'index']);
 
 Route::view('admin', 'layouts.admin');
+//user products
+Route::get('about', [AdminController::class, 'about']);
+Route::get('products', [ProductController::class, 'products']);
+
