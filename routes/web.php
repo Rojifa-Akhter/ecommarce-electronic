@@ -40,7 +40,10 @@ Route::middleware(['auth','admin'])->group(function(){
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('add-category', [CategoryController::class, 'showAddCategory']);
 Route::post('add-category', [CategoryController::class, 'create']);
-Route::get('products', [ProductController::class,'index']);
+Route::get('edit-category/{id}', [CategoryController::class, 'edit']);
+Route::put('update-category/{id}', [CategoryController::class, 'update']);
+Route::delete('delete-category/{id}', [CategoryController::class, 'destroy']);
+Route::get('product-list', [ProductController::class,'index']);
 Route::get('add-product', [ProductController::class, 'showAddProduct']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);

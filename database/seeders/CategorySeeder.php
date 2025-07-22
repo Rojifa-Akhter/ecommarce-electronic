@@ -16,13 +16,13 @@ class CategorySeeder extends Seeder
 
         Category::create([
             'name' => 'Electronics',
-            'image' => '2.jpg',
+            'image' => 'default_image.jpg',
             'description' => 'Electronic items and gadgets',
         ]);
 
         Category::create([
             'name' => 'Fashion',
-            'image' => '2.jpg',
+            'image' => 'default_image.jpg',
             'description' => 'Clothing and fashion accessories',
         ]);
     }

@@ -33,6 +33,7 @@
                         <img src="{{ $product->image[0] }}" class="card-img-top" style="height: 220px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title mb-1">{{ $product->title }}</h5>
+                            <p class="fw-small mb-0">{{ $product->description }}</p>
                             <small class="text-muted mb-2">{{ $product->category->name }}</small>
                             <p class="fw-semibold text-warning mb-0">${{ number_format($product->price, 2) }}</p>
                         </div>

@@ -11,8 +11,14 @@
                     Dashboard
                 </a>
             </li>
+             <li class="nav-item">
+                <a href="{{ url('/categories') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                    <i class="bi bi-tags"></i>
+                    Category
+                </a>
+            </li>
             <li class="nav-item">
-                <a href="{{ url('/products') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                <a href="{{ url('/product-list') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-box-seam"></i>
                     Products
                 </a>
@@ -23,12 +29,7 @@
                     Users
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ url('/categories') }}" class="nav-link text-white d-flex align-items-center gap-2">
-                    <i class="bi bi-tags"></i>
-                    Category
-                </a>
-            </li>
+
             <li class="nav-item">
                 <a href="{{ url('/blogs') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-pencil-square"></i>
