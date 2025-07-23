@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -20,7 +21,9 @@ class ProductController extends Controller
 //for admin
     public function index()
     {
-        return view('admin.product.product_list');
+        $products = Product::with('category')->latest()->paginate(10);
+        // $categories = Category::all();
+        return view('admin.product.product_list', compact('products', ));
     }
 
     /**
@@ -33,9 +36,31 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('{{ viewPath }}.create');
+        $validatedData = Validator::make($request->all(), [
+            'title'       => 'required|string|max:255',
+            'sku'         => 'nullable|string|max:255',
+            'stock'       => 'required|string|max:255',
+            'color'       => 'required|string|max:255',
+            'size'        => 'required|string|max:255',
+            'price'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'image*'      => 'nullable|image',
+        ]);
+        if ($validatedData->fails()) {
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
+        $data = $validatedData->validated();
+        if ($request->hasFile('image')) {
+            $image     = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/products'), $imageName);
+            $data['image'] = $imageName;
+        }
+        Category::create($data);
+        return redirect('product_list')->with('success', 'Product created successfully');
+
     }
 
     /**
