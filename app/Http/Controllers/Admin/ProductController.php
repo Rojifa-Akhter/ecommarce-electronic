@@ -31,7 +31,8 @@ class ProductController extends Controller
      */
     public function showAddProduct()
     {
-        return view('admin.product.add_product');
+        $categories = Category::all();
+        return view('admin.product.add_product',compact('categories'));
     }
     /**
      * Show the form for creating a new resource.
@@ -42,25 +43,37 @@ class ProductController extends Controller
             'title'       => 'required|string|max:255',
             'sku'         => 'nullable|string|max:255',
             'stock'       => 'required|string|max:255',
-            'color'       => 'required|string|max:255',
-            'size'        => 'required|string|max:255',
-            'price'       => 'required|string|max:255',
+            'color'       => 'required|string',
+            'size'        => 'required|string',
+            'price'       => 'required|numeric',
             'description' => 'required|string',
-            'image*'      => 'nullable|image',
+            'image'       => 'nullable|array',
+            'image.*'     => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
         if ($validatedData->fails()) {
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
-        $data = $validatedData->validated();
-        if ($request->hasFile('image')) {
-            $image     = $request->file('image');
-            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/products'), $imageName);
-            $data['image'] = $imageName;
-        }
-        Category::create($data);
-        return redirect('product_list')->with('success', 'Product created successfully');
 
+        $data = $validatedData->validated();
+
+        // Handle image uploads
+        $uploadedImages = [];
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/products'), $imageName);
+                $uploadedImages[] = $imageName;
+            }
+            $data['image'] = json_encode($uploadedImages);
+        }
+
+        $data['color'] = json_encode([$data['color']]);
+        $data['size']  = json_encode([$data['size']]);
+
+        Product::create($data);
+
+        return redirect('product-list')->with('success', 'Product created successfully');
     }
 
     /**
