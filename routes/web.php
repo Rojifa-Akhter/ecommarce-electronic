@@ -45,8 +45,11 @@ Route::put('update-category/{id}', [CategoryController::class, 'update']);
 Route::delete('delete-category/{id}', [CategoryController::class, 'destroy']);
 //products
 Route::get('product-list', [ProductController::class,'index']);
-Route::get('add-product', [ProductController::class, 'showAddProduct']);
-Route::post('add-product', [ProductController::class, 'create']);
+Route::get('add-product', [ProductController::class, 'create']);
+Route::post('add-product', [ProductController::class, 'store']);
+Route::get('show-product/{id}', [ProductController::class, 'show']);
+Route::get('edit-product', [ProductController::class, 'edit']);
+Route::put('update-product', [ProductController::class, 'update']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
 Route::get('add-about', [AdminController::class, 'createAboutForm']);

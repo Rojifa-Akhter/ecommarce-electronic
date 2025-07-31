@@ -5,32 +5,38 @@
 @section('content')
     <div class="bg-black text-white p-4 rounded shadow-sm" style="max-width: 950px; margin: auto; border: 1px solid #2a2a2a;">
         <h6 class="mb-4 text-secondary fw-semibold fs-6">Add Product</h6>
-<form action="{{ url('add-product') }}" method="POST" enctype="multipart/form-data">
+
+        <form action="{{ url('add-product') }}" method="POST" enctype="multipart/form-data">
             @csrf
-        <!-- Upload Area -->
-        <div class="mb-3 border border-warning rounded text-center py-5" style="border-style: dashed;">
-            <i class="bi bi-cloud-upload fs-3 text-warning mb-2 d-block"></i>
-            <p class="small text-white-50 mb-0">Drop your image here or
-                <label for="image-upload" class="text-warning text-decoration-none fw-semibold"
-                    style="cursor: pointer;">BROWSE</label>
-                <input type="file" name="image[]" id="image-upload" class="d-none" multiple>
+            <!-- Upload Area -->
+            <div class="mb-3 border border-warning rounded text-center py-5" style="border-style: dashed;" required>
+                <i class="bi bi-cloud-upload fs-3 text-warning mb-2 d-block"></i>
+                <p class="small text-white-50 mb-0">Drop your image here or
+                    <label for="image-upload" class="text-warning text-decoration-none fw-semibold"
+                        style="cursor: pointer;">BROWSE</label>
+                    <input type="file" name="image[]" id="image-upload" class="d-none" multiple>
 
-            </p>
-        </div>
+                </p>
+            </div>
 
-        <!-- Preview Images (Static for now) -->
-        <div id="preview-images" class="d-flex gap-2 mb-4">
-            <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
-            <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
-        </div>
+            <!-- Preview Images (Static for now) -->
+            <div id="preview-images" class="d-flex gap-2 mb-4">
+                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65"
+                    style="object-fit: cover;">
+                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65"
+                    style="object-fit: cover;">
+            </div>
 
 
 
             <!-- Product Title -->
             <div class="mb-3">
                 <label class="form-label text-white">Product Title</label>
-                <input type="text" name="title"
+                <input type="text" name="title" value="{{ old('title') }}"
                     class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="Product title">
+                @error('title')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <!-- Category & Price -->
@@ -43,6 +49,9 @@
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
+                    @error('category_id')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
 
                 </div>
 
@@ -50,6 +59,10 @@
                     <label class="form-label text-white">Product Price</label>
                     <input type="text" name="price"
                         class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="$ Price">
+                    @error('price')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+
                 </div>
             </div>
 
@@ -59,6 +72,10 @@
                     <label class="form-label text-white">SKU</label>
                     <input type="text" name="sku"
                         class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="Enter SKU">
+                    @error('sku')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+
                 </div>
                 <div class="col-md-6">
                     <label class="form-label text-white">Stock</label>
@@ -67,6 +84,10 @@
                         <option value="In stock">In stock</option>
                         <option value="Out of stock">Out of stock</option>
                     </select>
+                    @error('stock')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+
                 </div>
             </div>
 
@@ -75,6 +96,10 @@
                 <label class="form-label text-white">Product Description</label>
                 <textarea name="description" rows="5" class="form-control bg-black border-secondary text-white rounded-0"
                     placeholder="Short description about your product..."></textarea>
+                @error('description')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+
             </div>
 
             <!-- Action Buttons -->
@@ -88,39 +113,39 @@
 @endsection
 
 @push('scripts')
-<script>
-    const imageInput = document.getElementById('image-upload');
-    const previewDiv = document.getElementById('preview-images');
+    <script>
+        const imageInput = document.getElementById('image-upload');
+        const previewDiv = document.getElementById('preview-images');
 
-    imageInput.addEventListener('change', function () {
-        // age preview clear kore dibo
-        previewDiv.innerHTML = '';
+        imageInput.addEventListener('change', function() {
+            // age preview clear kore dibo
+            previewDiv.innerHTML = '';
 
-        const files = Array.from(this.files);
+            const files = Array.from(this.files);
 
-        if (files.length === 0) {
-            // jodi kichu select na kore, tahole abar default image dekhabo
-            previewDiv.innerHTML = `
+            if (files.length === 0) {
+                // jodi kichu select na kore, tahole abar default image dekhabo
+                previewDiv.innerHTML = `
                 <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
                 <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
             `;
-        }
+            }
 
-        files.forEach(file => {
-            const reader = new FileReader();
+            files.forEach(file => {
+                const reader = new FileReader();
 
-            reader.onload = function (e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'rounded';
-                img.width = 65;
-                img.height = 65;
-                img.style.objectFit = 'cover';
-                previewDiv.appendChild(img);
-            };
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'rounded';
+                    img.width = 65;
+                    img.height = 65;
+                    img.style.objectFit = 'cover';
+                    previewDiv.appendChild(img);
+                };
 
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            });
         });
-    });
-</script>
+    </script>
 @endpush

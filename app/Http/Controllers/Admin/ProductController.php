@@ -29,7 +29,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function showAddProduct()
+    public function create()
     {
         $categories = Category::all();
         return view('admin.product.add_product', compact('categories'));
@@ -37,12 +37,12 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|exists:categories,id',
             'title'       => 'required|string|max:255',
-            'sku'         => 'nullable|string|max:255',
+            'sku'         => 'required|string|max:255',
             'stock'       => 'required|string|max:255',
             'price'       => 'required|numeric',
             'description' => 'required|string',
@@ -85,19 +85,15 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        // {{ model }}::create($request->all());
-        return redirect()->route('{{ viewPath }}.index')->with('success', 'Created Successfully');
-    }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        // $item = {{ model }}::findOrFail($id);
-        return view('{{ viewPath }}.show', compact('item'));
+        $product = Product::with('category')->findOrFail($id);
+        return view('admin.product.show_product', compact('product'));
+
     }
 
     /**
@@ -122,6 +118,15 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            if ($product->getRawOriginal('image') && file_exists(public_path('uploads/products/' . $product->getRawOriginal('image')))) {
+                unlink(public_path('uploads/products/' . $product->getRawOriginal('image')));
+            }
+            $product->delete();
+            return redirect('product-list')->with('success', 'Product deleted successfully');
+        } else {
+            return redirect('product-list')->withErrors(['error' => 'Product not found']);
+        }
     }
 }

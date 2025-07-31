@@ -65,7 +65,7 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ url('view-product/' . $product->id) }}" class="text-success me-2"><i
+                                <a href="{{ url('show-product/' . $product->id) }}" class="text-success me-2"><i
                                         class="bi bi-eye-fill"></i></a>
                                 <a href="{{ url('edit-product/' . $product->id) }}" class="text-warning me-2"><i
                                         class="bi bi-pencil-square"></i></a>

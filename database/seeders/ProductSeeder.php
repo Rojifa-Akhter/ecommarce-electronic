@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
             'title' => 'Smartphone XYZ',
             'sku' => 'SMXYZ123',
             'stock' => '50',
-            'image' => json_encode(['1.jpeg', '3.jpeg']),
+            'image' => ['1.jpeg', '3.jpeg'],
             'price' => 499.99,
             'description' => 'Latest smartphone with advanced features',
         ]);
@@ -33,7 +33,7 @@ class ProductSeeder extends Seeder
             'title' => 'Men\'s Leather Jacket',
             'sku' => 'MJLEA456',
             'stock' => '20',
-            'image' => json_encode(['1.jpeg', '3.jpeg']),
+            'image' => ['1.jpeg', '3.jpeg'],
             'price' => 149.99,
             'description' => 'Stylish and warm leather jacket',
         ]);
