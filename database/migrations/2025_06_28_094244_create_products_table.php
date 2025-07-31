@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('sku')->nullable();
             $table->string('stock');
             $table->json('image')->nullable();
-            $table->json('color')->nullable();
-            $table->json('size')->nullable();
             $table->decimal('price', 10, 2);
             $table->text('description')->nullable();
             $table->timestamps();

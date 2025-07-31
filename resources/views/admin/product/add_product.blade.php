@@ -5,7 +5,8 @@
 @section('content')
     <div class="bg-black text-white p-4 rounded shadow-sm" style="max-width: 950px; margin: auto; border: 1px solid #2a2a2a;">
         <h6 class="mb-4 text-secondary fw-semibold fs-6">Add Product</h6>
-
+<form action="{{ url('add-product') }}" method="POST" enctype="multipart/form-data">
+            @csrf
         <!-- Upload Area -->
         <div class="mb-3 border border-warning rounded text-center py-5" style="border-style: dashed;">
             <i class="bi bi-cloud-upload fs-3 text-warning mb-2 d-block"></i>
@@ -13,17 +14,17 @@
                 <label for="image-upload" class="text-warning text-decoration-none fw-semibold"
                     style="cursor: pointer;">BROWSE</label>
                 <input type="file" name="image[]" id="image-upload" class="d-none" multiple>
+
             </p>
         </div>
 
         <!-- Preview Images (Static for now) -->
-        <div class="d-flex gap-2 mb-4">
+        <div id="preview-images" class="d-flex gap-2 mb-4">
             <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
             <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
         </div>
 
-        <form action="{{ url('add-product') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+
 
             <!-- Product Title -->
             <div class="mb-3">
@@ -69,35 +70,6 @@
                 </div>
             </div>
 
-            <!-- Colors -->
-            <div class="mb-3">
-                <label class="form-label text-white">Color</label>
-                <div class="d-flex gap-2">
-                    @foreach (['#a8413a', '#403c3d', '#1976d2', '#00bcd4', '#ffffff'] as $color)
-                        <label>
-                            <input type="checkbox" name="color[]" value="{{ $color }}" class="form-check-input me-1">
-                            <span class="rounded-circle d-inline-block"
-                                style="width: 22px; height: 22px; background-color: {{ $color }}; border: 1px solid #888;"></span>
-                        </label>
-                    @endforeach
-                </div>
-            </div>
-
-            <!-- Size Buttons -->
-            <div class="mb-4">
-                <label class="form-label text-white">Size</label>
-                <div class="d-flex gap-2">
-                    @foreach (['S', 'M', 'L', 'XL'] as $size)
-                        <label>
-                            <input type="checkbox" name="size[]" value="{{ $size }}" class="btn-check"
-                                id="size-{{ $size }}">
-                            <label class="btn border text-white px-3 py-1 btn-outline-light"
-                                for="size-{{ $size }}">{{ $size }}</label>
-                        </label>
-                    @endforeach
-                </div>
-            </div>
-
             <!-- Description -->
             <div class="mb-4">
                 <label class="form-label text-white">Product Description</label>
@@ -114,3 +86,41 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    const imageInput = document.getElementById('image-upload');
+    const previewDiv = document.getElementById('preview-images');
+
+    imageInput.addEventListener('change', function () {
+        // age preview clear kore dibo
+        previewDiv.innerHTML = '';
+
+        const files = Array.from(this.files);
+
+        if (files.length === 0) {
+            // jodi kichu select na kore, tahole abar default image dekhabo
+            previewDiv.innerHTML = `
+                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
+                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
+            `;
+        }
+
+        files.forEach(file => {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'rounded';
+                img.width = 65;
+                img.height = 65;
+                img.style.objectFit = 'cover';
+                previewDiv.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
+@endpush

@@ -32,44 +32,50 @@ class ProductController extends Controller
     public function showAddProduct()
     {
         $categories = Category::all();
-        return view('admin.product.add_product',compact('categories'));
+        return view('admin.product.add_product', compact('categories'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
     {
-        $validatedData = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|exists:categories,id',
             'title'       => 'required|string|max:255',
             'sku'         => 'nullable|string|max:255',
             'stock'       => 'required|string|max:255',
-            'color'       => 'required|string',
-            'size'        => 'required|string',
             'price'       => 'required|numeric',
             'description' => 'required|string',
             'image'       => 'nullable|array',
-            'image.*'     => 'image|mimes:jpg,jpeg,png|max:2048',
+            'image.*'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if ($validatedData->fails()) {
-            return redirect()->back()->withErrors($validatedData)->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $data = $validatedData->validated();
+        $data = $validator->validated();
 
-        // Handle image uploads
         $uploadedImages = [];
+
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/products'), $imageName);
-                $uploadedImages[] = $imageName;
+                if ($image->isValid()) {
+                    // Unique image name
+                    $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    // Move file to public/uploads/products
+                    $image->move(public_path('uploads/products'), $imageName);
+                    $uploadedImages[] = $imageName;
+                }
             }
-            $data['image'] = json_encode($uploadedImages);
         }
 
-        $data['color'] = json_encode([$data['color']]);
-        $data['size']  = json_encode([$data['size']]);
+        if (! empty($uploadedImages)) {
+            // Store as JSON encoded array (model casts handle decode)
+            $data['image'] = $uploadedImages;
+        } else {
+            $data['image'] = null; // or [] if you want empty array
+        }
 
         Product::create($data);
 

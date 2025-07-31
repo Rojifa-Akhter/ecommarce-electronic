@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,17 +12,21 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
     protected $casts = [
-        'images' => 'array',
+        'image' => 'array',
     ];
 
     public function getImageAttribute($value)
     {
-        $images = json_decode($value, true);
-
-        if (!is_array($images) || empty($images)) {
-            return [asset('images/products/default_image.jpg')];
+        if (empty($value)) {
+            return [asset('uploads/products/2.jpg')];
         }
 
-        return array_map(fn($img) => asset('images/products/' . $img), $images);
+        $images = is_array($value) ? $value : json_decode($value, true);
+        if (! is_array($images)) {
+            $images = explode(',', $value);
+        }
+
+        return array_map(fn($img) => asset('uploads/products/' . trim($img)), $images);
     }
+
 }

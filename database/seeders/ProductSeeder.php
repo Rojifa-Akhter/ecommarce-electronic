@@ -24,8 +24,6 @@ class ProductSeeder extends Seeder
             'sku' => 'SMXYZ123',
             'stock' => '50',
             'image' => json_encode(['1.jpeg', '3.jpeg']),
-            'color' => json_encode(['Black', 'White']),
-            'size' => json_encode(['S', 'M', 'L', 'XL']),
             'price' => 499.99,
             'description' => 'Latest smartphone with advanced features',
         ]);
@@ -36,8 +34,6 @@ class ProductSeeder extends Seeder
             'sku' => 'MJLEA456',
             'stock' => '20',
             'image' => json_encode(['1.jpeg', '3.jpeg']),
-            'color' => json_encode(['Brown', 'Black']),
-            'size' => json_encode(['S', 'M', 'L', 'XL']),
             'price' => 149.99,
             'description' => 'Stylish and warm leather jacket',
         ]);
