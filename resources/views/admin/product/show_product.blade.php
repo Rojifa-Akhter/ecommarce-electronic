@@ -10,11 +10,13 @@
         <div class="mb-4 d-flex gap-2 flex-wrap">
             @if ($product->image && is_array($product->image))
                 @foreach ($product->image as $img)
-                    <img src="{{ $product->image[0] ?? asset('images/products/default_image.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
+                    <img src="{{ $img }}" class="rounded" width="65" height="65" style="object-fit: cover;">
                 @endforeach
             @else
-                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65" style="object-fit: cover;">
+                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65"
+                    style="object-fit: cover;">
             @endif
+
         </div>
 
         <!-- Product Title -->
@@ -27,12 +29,14 @@
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label text-secondary">Category</label>
-                <div class="form-control bg-black border-secondary text-white rounded-0 py-2">{{ $product->category->name ?? 'N/A' }}</div>
+                <div class="form-control bg-black border-secondary text-white rounded-0 py-2">
+                    {{ $product->category->name ?? 'N/A' }}</div>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label text-secondary">Price</label>
-                <div class="form-control bg-black border-secondary text-white rounded-0 py-2">${{ number_format($product->price, 2) }}</div>
+                <div class="form-control bg-black border-secondary text-white rounded-0 py-2">
+                    ${{ number_format($product->price, 2) }}</div>
             </div>
         </div>
 

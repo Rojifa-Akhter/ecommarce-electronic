@@ -29,8 +29,7 @@
                     class="form-control bg-black text-white border-secondary rounded-0 py-2">
                 @if (isset($category) && $category->image)
                     <div class="mt-2">
-                        <img src="{{  $category->image }}" width="100" height="100"
-                            style="object-fit:cover;">
+                        <img src="{{ $category->image }}" width="100" height="100" style="object-fit:cover;">
                     </div>
                 @endif
 

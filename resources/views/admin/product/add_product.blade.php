@@ -1,13 +1,20 @@
 @extends('layouts.admin')
 
-@section('title', 'Add Product')
+@section('title', isset($product) ? 'Edit Product' : 'Add Product')
 
 @section('content')
     <div class="bg-black text-white p-4 rounded shadow-sm" style="max-width: 950px; margin: auto; border: 1px solid #2a2a2a;">
-        <h6 class="mb-4 text-secondary fw-semibold fs-6">Add Product</h6>
+        <h6 class="mb-4 text-secondary fw-semibold fs-6">
+            {{ isset($product) ? 'Edit Product' : 'Add New Product' }}
+        </h6>
 
-        <form action="{{ url('add-product') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ isset($product) ? url('update-product/' . $product->id) : url('add-product') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
+            @if (isset($product))
+                @method('PUT')
+            @endif
+
             <!-- Upload Area -->
             <div class="mb-3 border border-warning rounded text-center py-5" style="border-style: dashed;" required>
                 <i class="bi bi-cloud-upload fs-3 text-warning mb-2 d-block"></i>
@@ -21,18 +28,22 @@
 
             <!-- Preview Images (Static for now) -->
             <div id="preview-images" class="d-flex gap-2 mb-4">
-                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65"
-                    style="object-fit: cover;">
-                <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65"
-                    style="object-fit: cover;">
+                @if (isset($product) && is_array($product->image) && count($product->image) > 0)
+                    @foreach ($product->image as $img)
+                        <img src="{{ $img }}" class="rounded" width="65" height="65"
+                            style="object-fit: cover;">
+                    @endforeach
+                @else
+                    <img src="{{ asset('images/1.jpg') }}" class="rounded" width="65" height="65"
+                        style="object-fit: cover;">
+                @endif
             </div>
-
 
 
             <!-- Product Title -->
             <div class="mb-3">
                 <label class="form-label text-white">Product Title</label>
-                <input type="text" name="title" value="{{ old('title') }}"
+                <input type="text" name="title" value="{{ old('title', $product->title ?? '') }}"
                     class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="Product title">
                 @error('title')
                     <small class="text-danger">{{ $message }}</small>
@@ -46,7 +57,10 @@
                     <select name="category_id" class="form-select bg-black border-secondary text-white rounded-0 py-2">
                         <option selected disabled>Choose category</option>
                         @foreach ($categories ?? [] as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}"
+                                {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
                         @endforeach
                     </select>
                     @error('category_id')
@@ -57,8 +71,9 @@
 
                 <div class="col-md-6">
                     <label class="form-label text-white">Product Price</label>
-                    <input type="text" name="price"
+                    <input type="text" name="price" value="{{ old('price', $product->price ?? '') }}"
                         class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="$ Price">
+
                     @error('price')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -70,8 +85,9 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label class="form-label text-white">SKU</label>
-                    <input type="text" name="sku"
+                    <input type="text" name="sku" value="{{ old('sku', $product->sku ?? '') }}"
                         class="form-control bg-black border-secondary text-white rounded-0 py-2" placeholder="Enter SKU">
+
                     @error('sku')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -80,10 +96,14 @@
                 <div class="col-md-6">
                     <label class="form-label text-white">Stock</label>
                     <select name="stock" class="form-select bg-black border-secondary text-white rounded-0 py-2">
-                        <option selected disabled>Choose...</option>
-                        <option value="In stock">In stock</option>
-                        <option value="Out of stock">Out of stock</option>
+                        <option disabled>Choose...</option>
+                        <option value="In stock" {{ old('stock', $product->stock ?? '') == 'In stock' ? 'selected' : '' }}>
+                            In stock</option>
+                        <option value="Out of stock"
+                            {{ old('stock', $product->stock ?? '') == 'Out of stock' ? 'selected' : '' }}>Out of stock
+                        </option>
                     </select>
+
                     @error('stock')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -95,7 +115,7 @@
             <div class="mb-4">
                 <label class="form-label text-white">Product Description</label>
                 <textarea name="description" rows="5" class="form-control bg-black border-secondary text-white rounded-0"
-                    placeholder="Short description about your product..."></textarea>
+                    placeholder="Short description about your product...">{{ old('description', $product->description ?? '') }}</textarea>
                 @error('description')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -105,8 +125,10 @@
             <!-- Action Buttons -->
             <div class="d-flex justify-content-end gap-2">
                 <a href="{{ url('product-list') }}" class="btn btn-outline-secondary rounded-0 px-4">Cancel</a>
-                <button type="submit" class="btn fw-semibold text-black rounded-0 px-4"
-                    style="background-color: #d4af37;">ADD</button>
+                <button type="submit" class="btn fw-semibold text-black rounded-0 px-4" style="background-color: #d4af37;">
+                    {{ isset($product) ? 'UPDATE' : 'ADD' }}
+                </button>
+
             </div>
         </form>
     </div>

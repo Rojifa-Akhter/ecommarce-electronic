@@ -13,23 +13,28 @@
             <a href="#" class="position-relative">
                 <i class="bi bi-bell-fill text-warning fs-5"></i>
                 {{-- Optional: Badge --}}
-                <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle d-none">
+                <span
+                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle d-none">
                     <span class="visually-hidden">New alerts</span>
                 </span>
             </a>
 
             {{-- User Info --}}
             <div class="dropdown">
-                <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="navbarUserDropdown"
-                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ auth()->user()->image ?? 'uploads/profile_images/default_user.png' }}"
-                         alt="Profile" class="rounded-circle me-2" width="32" height="32" style="object-fit: cover;">
-                    <span class="text-white small">{{ auth()->user()->name ?? 'Jhon Doe' }}</span>
+                <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#"
+                    id="navbarUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ auth()->check() && auth()->user()->image ? asset(auth()->user()->image) : asset('uploads/profile_images/default_user.png') }}"
+                        alt="Profile" class="rounded-circle me-2" width="32" height="32"
+                        style="object-fit: cover;">
+
+                    <span class="text-white small">{{ auth()->check() ? auth()->user()->name : 'Jhon Doe' }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
                     <li><a class="dropdown-item" href="{{ url('/auth/profile') }}">Profile</a></li>
                     <li><a class="dropdown-item" href="{{ url('/settings') }}">Settings</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     <li>
                         <form action="{{ url('/auth/logout') }}" method="POST">
                             @csrf

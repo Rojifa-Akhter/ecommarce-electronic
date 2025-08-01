@@ -101,8 +101,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        // $item = {{ model }}::findOrFail($id);
-        return view('{{ viewPath }}.edit', compact('item'));
+        $product    = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('admin.product.add_product', compact('product', 'categories'));
     }
 
     /**
@@ -110,7 +111,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**
