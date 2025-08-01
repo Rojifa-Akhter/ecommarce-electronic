@@ -7,28 +7,33 @@
 
         <!-- Top Control Bar -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-            <!-- Show per page -->
+
             <div class="d-flex align-items-center gap-2">
                 <label for="entries" class="text-white">Showing</label>
-                <select id="entries" class="form-select bg-dark text-white border-0" style="width: 80px;">
-                    <option>10</option>
-                    <option>25</option>
-                    <option>50</option>
+                <select id="entries" name="entries" class="form-select bg-dark text-white border-0" style="width: 80px;">
+                    <option {{ request('entries') == 10 ? 'selected' : '' }}>10</option>
                 </select>
                 <span class="text-white">on page</span>
             </div>
 
             <!-- Search + filter -->
-            <div class="d-flex gap-2 align-items-center">
-                <input class="form-control bg-dark text-white border-0" style="min-width: 300px;" type="search"
-                    placeholder="Search products by name or SKU...">
-                <button class="btn btn-dark border border-secondary"><i class="bi bi-filter text-white"></i></button>
-            </div>
+            <form method="GET" class="d-flex gap-2 mb-3">
+                <input type="text" name="name" value="{{ request('name') }}"
+                    class="form-control bg-dark text-white border-0" placeholder="Search by name...">
+
+                <input type="date" name="created_at" value="{{ request('created_at') }}"
+                    class="form-control bg-dark text-white border-0">
+
+                <button type="submit" class="btn btn-warning">Filter</button>
+                <a href="{{ url('product-list') }}" class="btn btn-secondary">Reset</a>
+            </form>
 
             <!-- Add Button -->
             <a href="{{ url('/add-product') }}" class="btn text-warning border border-warning fw-semibold px-4">
                 Add new +
             </a>
+
+
         </div>
 
         <!-- Product Table -->
@@ -103,4 +108,33 @@
             </ul>
         </div>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success text-center">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger text-center">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger text-center">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+@endsection
+@section('scripts')
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
+        }, 300);
+    </script>
 @endsection

@@ -14,10 +14,10 @@ class Category extends Model
     public function getImageAttribute($value)
     {
         if ($value) {
-            return asset('images/categories/' . $value);
+            return asset('uploads/categories/' . $value);
         }
 
-        return asset('images/categories/default_image.jpg');
+        return asset('uploads/categories/default_image.jpg');
     }
 
 }

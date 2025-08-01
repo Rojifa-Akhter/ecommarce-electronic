@@ -19,11 +19,19 @@ class ProductController extends Controller
     }
 
 //for admin
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->latest()->paginate(10);
-        // $categories = Category::all();
-        return view('admin.product.product_list', compact('products', ));
+        $products = Product::with('category')
+            ->when($request->name, function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->name . '%'); // or use 'name' if your column is named that
+            })
+            ->when($request->created_at, function ($query) use ($request) {
+                $query->whereDate('created_at', $request->created_at);
+            })
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.product.product_list', compact('products'));
     }
 
     /**
@@ -111,7 +119,62 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $product = Product::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|exists:categories,id',
+            'title'       => 'required|string|max:255',
+            'sku'         => 'required|string|max:255',
+            'stock'       => 'nullable|string|max:255',
+            'price'       => 'nullable|numeric',
+            'description' => 'required|string',
+            'image'       => 'nullable|array',
+            'image.*'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = $validator->validated();
+
+        // Image update logic
+        if ($request->hasFile('image')) {
+            // Delete old images first
+            $oldImages = $product->getRawOriginal('image');
+
+            // Decode old images if JSON string
+            if (is_string($oldImages)) {
+                $oldImages = json_decode($oldImages, true);
+            }
+
+            if ($oldImages && is_array($oldImages)) {
+                foreach ($oldImages as $oldImage) {
+                    $oldImagePath = public_path('uploads/products/' . $oldImage);
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+            }
+
+            // Upload new images
+            $uploadedImages = [];
+            foreach ($request->file('image') as $image) {
+                if ($image->isValid()) {
+                    $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('uploads/products'), $imageName);
+                    $uploadedImages[] = $imageName;
+                }
+            }
+
+            $data['image'] = $uploadedImages;
+        } else {
+            $data['image'] = $product->image;
+        }
+
+        $product->update($data);
+
+        return redirect('product-list')->with('success', 'Product updated successfully');
     }
 
     /**

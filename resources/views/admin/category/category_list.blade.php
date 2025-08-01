@@ -7,20 +7,7 @@
 
         <!-- Top Control Bar -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-            <!-- Success / Error Message -->
-            @if (session('success'))
-                <div class="alert alert-success text-center">
-                    {{ session('success') }}
-                </div>
-            @endif
 
-            @if ($errors->any())
-                <div class="alert alert-danger text-center">
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}<br>
-                    @endforeach
-                </div>
-            @endif
 
             <!-- Show per page -->
             <div class="d-flex align-items-center gap-2">
@@ -120,6 +107,20 @@
             </ul>
         </div>
     </div>
+    <!-- Success / Error Message -->
+    @if (session('success'))
+        <div class="alert alert-success text-center">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger text-center">
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </div>
+    @endif
 @endsection
 @section('scripts')
     <script>

@@ -43,7 +43,7 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $image     = $request->file('image');
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/categories'), $imageName);
+            $image->move(public_path('uploads/categories'), $imageName);
             $data['image'] = $imageName;
         }
         Category::create($data);
@@ -97,13 +97,13 @@ class CategoryController extends Controller
         $data = $validated->validated();
 
         if ($request->hasFile('image')) {
-            if ($category->getRawOriginal('image') && file_exists(public_path('images/categories/' . $category->getRawOriginal('image')))) {
-                unlink(public_path('images/categories/' . $category->getRawOriginal('image')));
+            if ($category->getRawOriginal('image') && file_exists(public_path('uploads/categories/' . $category->getRawOriginal('image')))) {
+                unlink(public_path('uploads/categories/' . $category->getRawOriginal('image')));
             }
 
             $image     = $request->file('image');
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/categories'), $imageName);
+            $image->move(public_path('uploads/categories'), $imageName);
             $data['image'] = $imageName;
         }
 
@@ -119,8 +119,8 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         if ($category) {
-            if ($category->getRawOriginal('image') && file_exists(public_path('images/categories/' . $category->getRawOriginal('image')))) {
-                unlink(public_path('images/categories/' . $category->getRawOriginal('image')));
+            if ($category->getRawOriginal('image') && file_exists(public_path('uploads/categories/' . $category->getRawOriginal('image')))) {
+                unlink(public_path('uploads/categories/' . $category->getRawOriginal('image')));
             }
             $category->delete();
             return redirect('categories')->with('success', 'Category deleted successfully');

@@ -50,6 +50,7 @@ Route::post('add-product', [ProductController::class, 'store']);
 Route::get('show-product/{id}', [ProductController::class, 'show']);
 Route::get('edit-product/{id}', [ProductController::class, 'edit']);
 Route::put('update-product/{id}', [ProductController::class, 'update']);
+Route::delete('delete-product/{id}', [ProductController::class, 'destroy']);
 Route::get('users', [AuthController::class, 'index']);
 Route::get('dashboard', [AdminController::class, 'index']);
 Route::get('add-about', [AdminController::class, 'createAboutForm']);
