@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -34,27 +35,36 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('logout', [AuthController::class, 'logout']);
     });
 });
-Route::middleware(['auth','admin'])->group(function(){
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+//category
+    Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('add-category', [CategoryController::class, 'showAddCategory']);
+    Route::post('add-category', [CategoryController::class, 'create']);
+    Route::get('edit-category/{id}', [CategoryController::class, 'edit']);
+    Route::put('update-category/{id}', [CategoryController::class, 'update']);
+    Route::delete('delete-category/{id}', [CategoryController::class, 'destroy']);
+//products
+    Route::get('product-list', [ProductController::class, 'index']);
+    Route::get('add-product', [ProductController::class, 'create']);
+    Route::post('add-product', [ProductController::class, 'store']);
+    Route::get('show-product/{id}', [ProductController::class, 'show']);
+    Route::get('edit-product/{id}', [ProductController::class, 'edit']);
+    Route::put('update-product/{id}', [ProductController::class, 'update']);
+    Route::delete('delete-product/{id}', [ProductController::class, 'destroy']);
+
+    //user
+    Route::get('user-list', [UserController::class, 'index']);
+    Route::get('show-user/{id}', [UserController::class, 'show']);
+    Route::delete('delete-user/{id}', [UserController::class, 'destroy']);
+
+    //about
+    Route::get('add-about', [AdminController::class, 'createAboutForm']);
+    Route::post('add-about', [AdminController::class, 'createAbout']);
 
 });
-Route::get('categories', [CategoryController::class, 'index']);
-Route::get('add-category', [CategoryController::class, 'showAddCategory']);
-Route::post('add-category', [CategoryController::class, 'create']);
-Route::get('edit-category/{id}', [CategoryController::class, 'edit']);
-Route::put('update-category/{id}', [CategoryController::class, 'update']);
-Route::delete('delete-category/{id}', [CategoryController::class, 'destroy']);
-//products
-Route::get('product-list', [ProductController::class,'index']);
-Route::get('add-product', [ProductController::class, 'create']);
-Route::post('add-product', [ProductController::class, 'store']);
-Route::get('show-product/{id}', [ProductController::class, 'show']);
-Route::get('edit-product/{id}', [ProductController::class, 'edit']);
-Route::put('update-product/{id}', [ProductController::class, 'update']);
-Route::delete('delete-product/{id}', [ProductController::class, 'destroy']);
-Route::get('users', [AuthController::class, 'index']);
+
 Route::get('dashboard', [AdminController::class, 'index']);
-Route::get('add-about', [AdminController::class, 'createAboutForm']);
-Route::post('add-about', [AdminController::class, 'createAbout']);
+
 Route::get('faq', [AdminController::class, 'faq']);
 Route::get('add-faq', [AdminController::class, 'faqForm']);
 Route::post('add-faq', [AdminController::class, 'createFaq']);
@@ -64,4 +74,3 @@ Route::view('admin', 'layouts.admin');
 //user products
 Route::get('about', [AdminController::class, 'about']);
 Route::get('products', [ProductController::class, 'products']);
-

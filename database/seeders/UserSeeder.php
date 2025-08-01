@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin User',
             'role' => 'admin',
             'email' => 'rojr02054@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('123456'),
             'status' => 'active',
         ]);
 
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'name' => 'Regular User',
             'role' => 'user',
             'email' => 'user@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('123456'),
             'status' => 'active',
         ]);
     }

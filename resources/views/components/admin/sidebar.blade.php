@@ -12,19 +12,19 @@
                 </a>
             </li>
              <li class="nav-item">
-                <a href="{{ url('/categories') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                <a href="{{ url('/admin/categories') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-tags"></i>
                     Category
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/product-list') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                <a href="{{ url('/admin/product-list') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-box-seam"></i>
                     Products
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/users') }}" class="nav-link text-white d-flex align-items-center gap-2">
+                <a href="{{ url('/admin/user-list') }}" class="nav-link text-white d-flex align-items-center gap-2">
                     <i class="bi bi-people"></i>
                     Users
                 </a>
@@ -49,13 +49,13 @@
                 <div class="collapse ps-4" id="settingsSubmenu">
                     <ul class="nav flex-column mt-2">
                         <li class="nav-item">
-                            <a href="{{ url('/add-about') }}" class="nav-link text-white small">
+                            <a href="{{ url('/admin/add-about') }}" class="nav-link text-white small">
                                 <i class="bi bi-info-circle"></i>
                                 About
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/faq') }}" class="nav-link text-white small">
+                            <a href="{{ url('/admin/faq') }}" class="nav-link text-white small">
                                 <i class="bi bi-question-circle"></i>
                                 FAQ
                             </a>
