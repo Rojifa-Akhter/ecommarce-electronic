@@ -35,6 +35,7 @@
                     <tr>
                         <th>#</th>
                         <th>ID</th>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Action</th>
@@ -45,11 +46,19 @@
                         <tr style="background-color: #1c1c1c;" class="rounded-3 mb-3">
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $user->id }}</td>
+                            <td>
+                                @if ($user->image)
+                                    <img src="{{ $user->image }}" alt="User Image" width="50" height="50"
+                                        style="object-fit: cover;">
+                                @else
+                                    N/A
+                                @endif
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
 
                             <td>
-                                <a href="{{ url('show-user/' . $user->id) }}" class="text-success me-2"><i
+                                <a href="{{ url('/admin/show-user/' . $user->id) }}" class="text-success me-2"><i
                                         class="bi bi-eye-fill"></i></a>
                                 <form action="{{ url('delete-user/' . $user->id) }}" method="POST"
                                     style="display: inline-block;">

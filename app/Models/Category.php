@@ -17,7 +17,7 @@ class Category extends Model
             return asset('uploads/categories/' . $value);
         }
 
-        return asset('uploads/categories/default_image.jpg');
+        return asset('uploads/categories/default_image.png');
     }
 
 }

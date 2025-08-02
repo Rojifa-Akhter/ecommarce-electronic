@@ -29,12 +29,12 @@
                     class="form-control bg-dark text-white border-0">
 
                 <button type="submit" class="btn btn-warning">Filter</button>
-                <a href="{{ url('categories') }}" class="btn btn-secondary">Reset</a>
+                <a href="{{ url('admin/categories') }}" class="btn btn-secondary">Reset</a>
             </form>
 
 
             <!-- Add Category Button -->
-            <a href="{{ url('/add-category') }}" class="btn text-warning border border-warning fw-semibold px-4">
+            <a href="{{ url('/admin/add-category') }}" class="btn text-warning border border-warning fw-semibold px-4">
                 Add Category +
             </a>
         </div>
@@ -70,9 +70,9 @@
                             <td>{{ $category->created_at->format('d M Y') }}</td>
 
                             <td>
-                                <a href="{{ url('edit-category/' . $category->id) }}" class="text-warning me-2"><i
+                                <a href="{{ url('admin/edit-category/' . $category->id) }}" class="text-warning me-2"><i
                                         class="bi bi-pencil-square"></i></a>
-                                <form action="{{ url('delete-category/' . $category->id) }}" method="POST"
+                                <form action="{{ url('admin/delete-category/' . $category->id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')

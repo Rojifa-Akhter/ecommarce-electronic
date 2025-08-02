@@ -47,7 +47,7 @@ class CategoryController extends Controller
             $data['image'] = $imageName;
         }
         Category::create($data);
-        return redirect('categories')->with('success', 'Category created successfully');
+        return redirect('admin/categories')->with('success', 'Category created successfully');
     }
 
     /**
@@ -109,7 +109,7 @@ class CategoryController extends Controller
 
         $category->update($data);
 
-        return redirect('categories')->with('success', 'Category updated successfully');
+        return redirect('admin/categories')->with('success', 'Category updated successfully');
     }
 
     /**
@@ -123,9 +123,9 @@ class CategoryController extends Controller
                 unlink(public_path('uploads/categories/' . $category->getRawOriginal('image')));
             }
             $category->delete();
-            return redirect('categories')->with('success', 'Category deleted successfully');
+            return redirect('admin/categories')->with('success', 'Category deleted successfully');
         } else {
-            return redirect('categories')->withErrors(['error' => 'Category not found']);
+            return redirect('admin/categories')->withErrors(['error' => 'Category not found']);
         }
     }
 }

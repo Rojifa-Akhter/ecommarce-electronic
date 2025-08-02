@@ -25,11 +25,11 @@
                     class="form-control bg-dark text-white border-0">
 
                 <button type="submit" class="btn btn-warning">Filter</button>
-                <a href="{{ url('product-list') }}" class="btn btn-secondary">Reset</a>
+                <a href="{{ url('admin/product-list') }}" class="btn btn-secondary">Reset</a>
             </form>
 
             <!-- Add Button -->
-            <a href="{{ url('/add-product') }}" class="btn text-warning border border-warning fw-semibold px-4">
+            <a href="{{ url('admin/add-product') }}" class="btn text-warning border border-warning fw-semibold px-4">
                 Add new +
             </a>
 
@@ -70,11 +70,11 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ url('show-product/' . $product->id) }}" class="text-success me-2"><i
+                                <a href="{{ url('admin/show-product/' . $product->id) }}" class="text-success me-2"><i
                                         class="bi bi-eye-fill"></i></a>
-                                <a href="{{ url('edit-product/' . $product->id) }}" class="text-warning me-2"><i
+                                <a href="{{ url('admin/edit-product/' . $product->id) }}" class="text-warning me-2"><i
                                         class="bi bi-pencil-square"></i></a>
-                                <form action="{{ url('delete-product/' . $product->id) }}" method="POST"
+                                <form action="{{ url('admin/delete-product/' . $product->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')
