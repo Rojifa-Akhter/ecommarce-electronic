@@ -63,7 +63,7 @@
 
         <!-- Back Button -->
         <div class="d-flex justify-content-end">
-            <a href="{{ url('product-list') }}" class="btn btn-outline-secondary rounded-0 px-4">Back</a>
+            <a href="{{ url('admin/product-list') }}" class="btn btn-outline-secondary rounded-0 px-4">Back</a>
         </div>
     </div>
 @endsection

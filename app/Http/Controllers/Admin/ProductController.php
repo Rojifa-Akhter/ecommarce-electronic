@@ -174,7 +174,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect('product-list')->with('success', 'Product updated successfully');
+        return redirect('admin/product-list')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -188,9 +188,9 @@ class ProductController extends Controller
                 unlink(public_path('uploads/products/' . $product->getRawOriginal('image')));
             }
             $product->delete();
-            return redirect('product-list')->with('success', 'Product deleted successfully');
+            return redirect('admin/product-list')->with('success', 'Product deleted successfully');
         } else {
-            return redirect('product-list')->withErrors(['error' => 'Product not found']);
+            return redirect('admin/product-list')->withErrors(['error' => 'Product not found']);
         }
     }
 }

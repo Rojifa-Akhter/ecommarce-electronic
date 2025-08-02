@@ -8,7 +8,7 @@
             {{ isset($product) ? 'Edit Product' : 'Add New Product' }}
         </h6>
 
-        <form action="{{ isset($product) ? url('update-product/' . $product->id) : url('add-product') }}" method="POST"
+        <form action="{{ isset($product) ? url('admin/update-product/' . $product->id) : url('admin/add-product') }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @if (isset($product))
@@ -124,7 +124,7 @@
 
             <!-- Action Buttons -->
             <div class="d-flex justify-content-end gap-2">
-                <a href="{{ url('product-list') }}" class="btn btn-outline-secondary rounded-0 px-4">Cancel</a>
+                <a href="{{ url('admin/product-list') }}" class="btn btn-outline-secondary rounded-0 px-4">Cancel</a>
                 <button type="submit" class="btn fw-semibold text-black rounded-0 px-4" style="background-color: #d4af37;">
                     {{ isset($product) ? 'UPDATE' : 'ADD' }}
                 </button>
